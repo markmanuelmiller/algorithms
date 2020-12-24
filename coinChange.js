@@ -37,3 +37,18 @@ debugger;
 console.log(coinChange([1, 2, 5], 11)); // 3
 const ans = coinChange([2, 5], 11); // 4
 console.log(ans);
+
+// coinChange without recursion
+
+const coinChangeIterative = function (coins, amount) {
+  const cache = new Array(amount + 1).fill(amount + 1);
+  cache[0] = 0;
+  for (let i = 0; i <= amount; i++) {
+    for (let coin = 0; coin < coins.length; coin++) {
+      if (coins[coin] <= i) {
+        cache[i] = Math.min(cache[i], cache[i - coins[coin]] + 1);
+      }
+    }
+  }
+  return cache[amount] > amount ? -1 : cache[amount];
+};
